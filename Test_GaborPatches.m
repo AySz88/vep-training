@@ -1,7 +1,7 @@
 % Test_GaborPatches.m
 
 e = []; %caught exception
-[~, ~, HW] = Parameters();
+HW = HardwareParameters();
 [didHWInit, HW] = InitializeHardware(HW);
 
 iters = 1200 * 60; % seconds * framerate

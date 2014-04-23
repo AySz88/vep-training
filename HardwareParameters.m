@@ -42,7 +42,7 @@ function [ HW ] = HardwareParameters()
             end
         case '1414'
             switch HW.screenNum
-                case 1 % CRT screen
+                case 1 % CRT screen - for some reason reverse of Windows
                     HW.monWidth	= 49.5; % FIXME approx?
                     HW.viewDist	= 90; % FIXME approx
                     HW.useStereoscope = true;
@@ -101,8 +101,8 @@ function [ HW ] = HardwareParameters()
     if HW.useStereoscope
         % Uses ScreenCustomStereo
         HW.stereoMode = 0;
-        HW.stereoTexWidth = 7.0/16.0;
-        HW.stereoTexOffset = [-4.0/16.0, 4.0/16.0];
+        HW.stereoTexWidth = 7.75/16.0; % This is for the projector room scope
+        HW.stereoTexOffset = [-4.125/16.0, 4.125/16.0];
         HW.monWidth = HW.monWidth * HW.stereoTexWidth;
     else
         HW.stereoMode = 1;
