@@ -5,7 +5,7 @@ function [ HW ] = HardwareParameters()
 %   HW: Hardware parameter structure
 
     % Projector ('1424'), plasma ('1424plasma'), or stereoscope
-    % ('1402chatnoir')?
+    % ('1402chatnoir'), etc.
     HW.room = '1414';
     HW.screenNum = 1; % see Screen('Screens?')
     
@@ -71,6 +71,19 @@ function [ HW ] = HardwareParameters()
             HW.viewDist = 110;
             HW.useStereoscope = true;
             knownRoom = true;
+        case 'benoffice'
+            switch HW.screenNum
+                case 1 % Dev screen
+                    HW.monWidth = 50;
+                    HW.viewDist	= 60;
+                    HW.useStereoscope = true;
+                    knownRoom = true;
+                case 2 % Display screen
+                    HW.monWidth	= 91.4; % FIXME approx?
+                    HW.viewDist	= 145; % FIXME approx
+                    HW.useStereoscope = true;
+                    knownRoom = true;
+            end
     end
     if ~knownRoom
         warning('Parameters:BadDefault', ...
