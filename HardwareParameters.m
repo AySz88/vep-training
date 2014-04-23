@@ -6,8 +6,8 @@ function [ HW ] = HardwareParameters()
 
     % Projector ('1424'), plasma ('1424plasma'), or stereoscope
     % ('1402chatnoir')?
-    HW.room = '1424plasma';
-    HW.screenNum = 0; % see Screen('Screens?')
+    HW.room = '1414';
+    HW.screenNum = 1; % see Screen('Screens?')
     
     % HW.monWidth: width of entire viewable screen (cm)
     %   (Will later be multiplied by the fraction used, if stereoscope)
@@ -37,6 +37,19 @@ function [ HW ] = HardwareParameters()
                 case 2 % Plasma screen
                     HW.monWidth	= 91.4; % FIXME approx?
                     HW.viewDist	= 145; % FIXME approx
+                    HW.useStereoscope = true;
+                    knownRoom = true;
+            end
+        case '1414'
+            switch HW.screenNum
+                case 1 % CRT screen
+                    HW.monWidth	= 49.5; % FIXME approx?
+                    HW.viewDist	= 90; % FIXME approx
+                    HW.useStereoscope = true;
+                    knownRoom = true;
+                case 2 % Dev screen
+                    HW.monWidth = 30;
+                    HW.viewDist	= 70;
                     HW.useStereoscope = true;
                     knownRoom = true;
             end
