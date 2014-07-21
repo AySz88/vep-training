@@ -1,0 +1,36 @@
+function [ HW ] = DrawFixationMark( HW, loc, fixWidthPx, fixLineWidthPx )
+%DRAWFIXATIONMARK Draws a fixation mark with nonius lines into a stereo
+%view
+%   loc = center of mark
+%   fixWidthPx = width of fixation box, in pixels
+%   fixLineWidthPx = line width fixation box and lines
+%   
+% TODO parameterize locations of Nonius lines?
+
+for eye = [0 1]
+    HW = ScreenCustomStereo(...
+        HW, 'SelectStereoDrawBuffer', HW.winPtr, eye);
+    
+    Screen('FrameRect', HW.winPtr, HW.white, ...
+        [loc-0.5*fixWidthPx, loc+0.5*fixWidthPx], ...
+        fixLineWidthPx);
+    
+    if eye == 0
+        Screen('DrawLine', HW.winPtr, ...
+            HW.white, loc(1), loc(2)-0.75*fixWidthPx,  ...
+            loc(1), loc(2)-1.5*fixWidthPx, fixLineWidthPx);
+        Screen('DrawLine', HW.winPtr, ...
+            HW.white, loc(1)-0.75*fixWidthPx, loc(2),  ...
+            loc(1)-1.5*fixWidthPx, loc(2), fixLineWidthPx);
+    else
+        Screen('DrawLine', HW.winPtr, ...
+            HW.white, loc(1), loc(2)+0.75*fixWidthPx,  ...
+            loc(1), loc(2)+1.5*fixWidthPx, fixLineWidthPx);
+        Screen('DrawLine', HW.winPtr, ...
+            HW.white, loc(1)+0.75*fixWidthPx, loc(2),  ...
+            loc(1)+1.5*fixWidthPx, loc(2), fixLineWidthPx);
+    end
+end
+
+end
+

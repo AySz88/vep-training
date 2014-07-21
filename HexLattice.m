@@ -1,4 +1,4 @@
-function coords = HexLattice(radius);
+function coords = HexLattice(radius)
 % function coords = HexLattice(size);
 %
 % Create a hexagonal lattice with unit spacing that contains all lattice points out to
@@ -12,7 +12,7 @@ function coords = HexLattice(radius);
 
 % One row of the lattice
 xVals  = -ceil(radius):1:ceil(radius); 
-coords = [xVals' zeros(size(xVals'))];   
+%coords = [xVals' zeros(size(xVals'))];
 
 % Offsets
 nRow = ceil(2*radius/(sqrt(3)/2));

@@ -8,7 +8,6 @@ iters = 1200 * 60; % seconds * framerate
 pauseTime = 0; % explicit pause between frames
 % iters = 5;
 % pauseTime = 0.5;
-textureRes = 512; % for the texture of the basic gabor
 nGabors = 10; % gabors per frame
 
 % Distributions of gabor sizes, etc.
@@ -20,24 +19,7 @@ lumMin = .5; % contrast of lowest-contrast gabor, relative to maximum possible f
 lumMax = .5;
 try
     %% Generate texture
-    [X, Y] = meshgrid(-4*pi:(8*pi)/(textureRes-1):4*pi);
-    
-    % from Gabor2D
-    % sigma = size of gabor
-    % gamma = aspect ratio
-    % lambda = wavelength of carrier
-    % phi = phase shift
-    sigma = pi;
-    gamma = 1.0;
-    lambda = 2*pi;
-    phi = 0.0;
-    
-    Z = exp(-(X.^2 + gamma^2 * Y.^2)/(2*sigma^2)) .* cos(2*pi*X/lambda + phi);
-
-    HW = ScreenCustomStereo(...
-        HW, 'SelectStereoDrawBuffer', HW.winPtr, 0);
-    [HW, gaborTexture] = ScreenCustomStereo(...
-        HW, 'MakeTexture', HW.realWinPtr, Z, [], [], 1); %FIXME hack realwinptr
+    [HW, gaborTexture] = GenerateGaborTexture(HW);
     
     screenSize = HW.screenRect([3 4]) - HW.screenRect([1 2]);
     screenCenter = 0.5*(HW.screenRect([1 2]) + HW.screenRect([3 4]));
@@ -76,27 +58,8 @@ try
                 texDestThetas', [], [], texColors');
             HW = ScreenCustomStereo(HW, 'BlendFunction',...
                 HW.winPtr, oldSrc, oldDst, oldColorMask);
-        
-            Screen('FrameRect', HW.winPtr, HW.white, ...
-                [presCenter-0.5*fixWidthPx, presCenter+0.5*fixWidthPx], ...
-                fixLineWidthPx);
-            
-            if eye == 0
-                Screen('DrawLine', HW.winPtr, ...
-                    HW.white, presCenter(1), presCenter(2)-0.75*fixWidthPx,  ...
-                    presCenter(1), presCenter(2)-1.5*fixWidthPx, fixLineWidthPx);
-                Screen('DrawLine', HW.winPtr, ...
-                    HW.white, presCenter(1)-0.75*fixWidthPx, presCenter(2),  ...
-                    presCenter(1)-1.5*fixWidthPx, presCenter(2), fixLineWidthPx);
-            else
-                Screen('DrawLine', HW.winPtr, ...
-                    HW.white, presCenter(1), presCenter(2)+0.75*fixWidthPx,  ...
-                    presCenter(1), presCenter(2)+1.5*fixWidthPx, fixLineWidthPx);
-                Screen('DrawLine', HW.winPtr, ...
-                    HW.white, presCenter(1)+0.75*fixWidthPx, presCenter(2),  ...
-                    presCenter(1)+1.5*fixWidthPx, presCenter(2), fixLineWidthPx);
-            end
         end
+        HW = DrawFixationMark(HW, presCenter, fixWidthPx, fixLineWidthPx);
         
         HW = ScreenCustomStereo(HW, 'Flip', HW.winPtr);
         % End single frame

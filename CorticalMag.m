@@ -82,11 +82,12 @@ end
 
 r_cortex = sqrt(sum(inCoords'.^2))';              % N x 1, radius of point in uniform cortical space (x)
 r_VisSpace = E_h * (exp(r_cortex/E_h) - 1);       % N x 1, radius of point in visual field space (E)
-outCoords = diag(r_VisSpace./r_cortex)*inCoords;  % N x 2. Normalize each coord pair by dividing by r_cortex, then scale.
-originIndx = all(inCoords==0,2);                  % To be used for repair of NaN at origin due to divide by zero
-if any(originIndx)
-    outCoords(originIndx, :) = [0 0];             % Repair NaN at origin due to divide by zero
-end
+magFactor = r_VisSpace./r_cortex;
+outCoords = [magFactor magFactor].*inCoords;  % N x 2. Normalize each coord pair by dividing by r_cortex, then scale.
+
+% Repair NaN at origin(s) due to divide by zero
+origins = all(inCoords==0,2);
+outCoords(origins, :) = zeros(sum(origins),2);
+
 relMag = 1 + r_VisSpace/E_h;                      % N x 1
 
-        
