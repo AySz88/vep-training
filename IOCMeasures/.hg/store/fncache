@@ -1,0 +1,141 @@
+data/InitializeHardware.m.i
+data/FindDotThresholdIterative.m.i
+data/FindPctCohThresholdLanya.m.i
+data/GenericInitStaircase.m.i
+data/Find_CRthreshold_24_7_SNdistribute_MixAll.m.i
+data/Find_CRthreshold_25_7_MixStaircase.m.i
+data/Oksana2013Blur.m.i
+data/AdjustmentParameters.m.i
+data/media/Windows Balloon.wav.i
+data/DrawDottedCross.m.i
+data/DisplayLumForCalibration.m.i
+data/Main.m.i
+data/FindContrastTradeoffThresholdOksanaPctCoh_082912.m.i
+data/FindContrastTradeoffAdjustmentIvan.m.i
+data/Bit-stealing data/stats 1424 projector 2012-07-21.mat.i
+data/media/lumCalib 1402chatnoir 2012-10-24.mat.i
+data/RanDotKgram.m.i
+data/media/lumCalib 1402 2011-09-21.mat.i
+data/Reanalyze.m.i
+data/FindContrastTradeoffThresholdOksanaPctCoh_NEW.m.i
+data/media/Windows Balloon (Quirky) 3.wav.i
+data/media/Windows Hardware Fail.wav.i
+data/Bit-stealing data/coeffs 1424 projector 2012-07-21.mat.i
+data/DrawFusionLock.m.i
+data/ParametersLanya.m.i
+data/AdjustStimulus.m.i
+data/FindThresholdMixStaircases.m.i
+data/StatModelContrast.m.i
+data/Find_CRthreshold_8_7_SNdistribute_MixAll.m.i
+data/media/Windows Balloon (Quirky) 2.wav.i
+data/media/lumCalib 1402 2012-05-01.mat.i
+data/Bit-stealing data/data 1402 Alienware 2012-07-21.mat.i
+data/FindThreshold.m.i
+data/FindContrastTradeoffThresholdOksana7_18.m.i
+data/FindDotThresholdABBA.m.i
+data/FindContrastTradeoffThresholdOksanaScale.m.i
+data/FindContrastTradeoffThresholdOksana7_25Patch.m.i
+data/RectangularSinusoidAdjustment.m.i
+data/@Task/Task.m.i
+data/FindDotThresholdABBA_Dichopt.m.i
+data/fastAnalyzeLanyaCode.m.i
+data/lumCalib.mat.i
+data/FindThresholdMixedStaircases.m.i
+data/FindContrastTradeoffThresholdOksanaScale_NEW.m.i
+data/Parameters.m.i
+data/FindDotThresholdABBA_CONTRAST.m.i
+data/FindThresholdLanyaMixAll.m.i
+data/RanDotKgramLanya.m.i
+data/media/lumCalib old.mat.i
+data/media/lumCalib.mat.i
+data/Test_ScreenCustomStereo.m.i
+data/PsychPortAudioTester.m.i
+data/OksanaCallback.m.i
+data/FindDotThresholdOksana7_25MixDichop.m.i
+data/PsychPortAudioTester2.m.i
+data/LumToColor.m.i
+data/SinusoidImage.m.i
+data/StatModelDots.m.i
+data/ParametersMixStaircases.m.i
+data/QuickAnalyzeTs.m.i
+data/FindThresholdLanyaMixAll_03_19_2013.m.i
+data/RandCos.m.i
+data/media/Windows Critical Stop (Quirky) 2.wav.i
+data/FindContrastTradeoffThresholdOksana.m.i
+data/TrainStereoacuity.m.i
+data/GraphResults.m.i
+data/Bit-stealing data/stats.mat.i
+data/Bit-stealing data/coeffs 1402chatnoir hp2311gt 2012-10-24.mat.i
+data/StatModelContrastTradeoff.m.i
+data/ContrastTradeoffStaircaseHelpers.m.i
+data/FindThresholdMixStaircase.m.i
+data/CalcGarciaPerezStaircase.m.i
+data/FindContrastTradeoffThresholdOksana7_25PatchShort.m.i
+data/FindPctCohThresholdMixStaircaseLanya.m.i
+data/Test_RanDotKgram.m.i
+data/FindContrastThresholdAmb.m.i
+data/ScreenCustomStereoAlex.m.i
+data/FindThresholdLanya.m.i
+data/ConvertToFlatFileSummer2012.m.i
+data/media/lumCalib 1424 2012-07-21.mat.i
+data/@Group/Group.m.i
+data/FindDotThreshold.m.i
+data/media/lumCalib 1402 2012-07-21.mat.i
+data/RectangularSinusoidControlAdjustment.m.i
+data/Breaktime.m.i
+data/OksanaSummer2013.m.i
+data/Test_StereoacuityRectangles.m.i
+data/media/Windows Balloon (Quirky).wav.i
+data/.hgignore.i
+data/@HardwareSetup/HardwareSetup.m.i
+data/RanDotKgramAlex.m.i
+data/FindDotThresholdCounterbalanced.m.i
+data/FindContrastTradeoffThresholdOksana7_25.m.i
+data/@Session/Session.m.i
+data/DualDotStaircaseHelpers.m.i
+data/media/ASIO4ALL_2_11_Beta1_English.exe.i
+data/StatModelDualDotTradeoff.m.i
+data/media/ASIO4ALL_2_11_Beta1_English.exe.d
+data/media/Windows Critical Stop (Quirky).wav.i
+data/ContrastTradeoffStaircaseHelpersLanya.m.i
+data/OksanaNewComing_2.m.i
+data/InitializeHardwareAlex.m.i
+data/RandListProbability.m.i
+data/Bit-stealing data/stats 1402chatnoir hp2311gt 2012-10-24.mat.i
+data/Bit-stealing data/stats 1402 Alienware 2012-07-21.mat.i
+data/Find_CRthreshold_16_7_SNdistribute_MixAll.m.i
+data/Parameters_03_19_2013.m.i
+data/Find_PctCohThresholdMixAll_03_19_2013.m.i
+data/Find_CRthreshold_30_7_SNdistribute_MixAll.m.i
+data/StereoTestImage.m.i
+data/FindDotThreshExperiment.m.i
+data/FindContrastTradeoffThresholdLisa.m.i
+data/FindContrastTradeoffThresholdIvan.m.i
+data/StatModelStereoacuity.m.i
+data/GenericUpdateHelper.m.i
+data/FindContrastTradeoffThresholdOksana7_25MixDichop.m.i
+data/FindDotThresholdRLRLRL.m.i
+data/readme (directory of files).txt.i
+data/AngSinusoidImg.m.i
+data/RectangularSinusoidDisplay.m.i
+data/FindContrastTradeoffThresholdOksanaPctCoh.m.i
+data/Bit-stealing data/data.mat.i
+data/Bit-stealing data/DataSetupScript.m.i
+data/ContrastStaircaseHelpers.m.i
+data/Bit-stealing data/data 1424 projector 2012-07-21.mat.i
+data/Bit-stealing data/coeffs 1402 Alienware 2012-07-21.mat.i
+data/CleanupHardware.m.i
+data/RandListPeriod.m.i
+data/OksanaNewComing_1.m.i
+data/ScreenCustomStereo.m.i
+data/NoniusAdjustmentTask.m.i
+data/FindContrastTradeoffThresholdSorNFix.m.i
+data/FindContrastTradeoffThresholdOksana7_18Patch.m.i
+data/DotStaircaseHelpers.m.i
+data/StereoacuityRectangles.m.i
+data/SARTrainingStaircase.m.i
+data/ScreenPrism.m.i
+data/DefaultStereoacuityParameters.m.i
+data/Bit-stealing data/data 1402chatnoir hp2311gt 2012-10-24.mat.i
+data/FindContrastThreshold.m.i
+data/@Singleton/Singleton.m.i

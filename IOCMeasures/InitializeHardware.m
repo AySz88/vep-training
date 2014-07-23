@@ -37,7 +37,7 @@ function [ didHWInit, HW ] = InitializeHardware( HW )
     % HACK presumes that InitializeHardware is called only when
     %   it is expected that something slow might happen
     java.lang.System.runFinalization();
-%     java.lang.System.gc();
+    java.lang.System.gc();
     
     if isfield(HW, 'initialized') && HW.initialized
         didHWInit = false;
