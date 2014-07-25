@@ -6,17 +6,20 @@
 % uses keypad to indicate where on the screen the special stimulus is.
 %
 % Ben and Alex 2014-07-22
-
-subjectCode = input('Please enter Subject code (e.g. NBAB140606): ', 's');
+subjectCode = '';
+while isempty(subjectCode)
+    subjectCode = input('Please enter Subject code (e.g. NBAB06062014): ', 's');
+end
 % ambEyeString = input('Which eye is amblyopic? Enter r, l, or n: ', 's');
 
-%% Measure interocular contrast (IOC) using RDK and Ding, and Stereoacuity
-% mainFolder = pwd;
-% cd('IOCMeasures');
-% [log10IOC, ~] = ShortTrainStereoacuity(sprintf('%s pre-Gabor', subjectCode));
-% IOC = 10^log10IOC;
-% cd(mainFolder);
-IOC = 1.0;
+Measure interocular contrast (IOC) using RDK and Ding, and Stereoacuity
+mainFolder = pwd;
+cd('IOCMeasures');
+[log10IOC, ~] = ShortTrainStereoacuity(sprintf('%s pre-Gabor', subjectCode));
+IOC = 10^log10IOC;
+cd(mainFolder);
+
+% IOC = 1;
 
 %% Choose IOC to use in experiment
 fprintf('Measured IOC is (left/right) %.2f\n', IOC);
@@ -67,7 +70,7 @@ end
 
 %% Initializations
 experimentDurMin = 40;  % How long training should last
-nRest = 3;              % Number of rests during the experiment
+nRest = 3;              % Number of rests during the experiment (between blocks)
 restDuration = 30;      % Number of seconds per resting period
 trainDurRange = [1 5];  % Range of randomly chosen training durations (uniformly distributed)
 testDurationInit = 1.5;
@@ -91,18 +94,21 @@ dataColumns = {'trialNum', 'eyeCond', 'testDuration', 'correct', 'correctKey', '
 data = DataFile(DataFile.defaultPath(subjectCode), dataColumns);
 
 %% Start the code loop
-blockDurSec = 60*experimentDurMin/(nRest+1);    % Duration of blocks between breaks 
+nBlock = nRest+1;
+blockDurSec = 60*experimentDurMin/nBlock;    % Duration of blocks between breaks 
 testDuration = testDurationInit * ones(1,3); % left, right, both
 startTime = GetSecs();
 
 nextRestTime = startTime + blockDurSec;
-while GetSecs() < startTime + 60*experimentDurMin     % Keep showing training+test stimuli
+% while GetSecs() < startTime + 60*experimentDurMin     % Keep showing training and test stimuli until end of experiment 
+while blockNumber < nBlock + 1     % Keep showing training and test stimuli until end of experiment 
     
+    % Show a training stimulus
     trainDuration = rand * diff(trainDurRange) + trainDurRange(1); 
     HW = ShowTraining(HW, trainDuration, contrasts, gaborTexture, gaborTextureInv);
     
+    % Show a test stimulus
     eyeCond = randi(3);
-    
     KbQueueFlush();
     KbQueueStart();
     trialShowTime = GetSecs();
@@ -111,10 +117,12 @@ while GetSecs() < startTime + 60*experimentDurMin     % Keep showing training+te
     testRecord.duration = testDuration(eyeCond);
     
     % Collect response
-    HW = ShowTraining(HW, 0.5, contrasts, gaborTexture, gaborTextureInv);
+    HW = ShowTraining(HW, 0.5, contrasts, gaborTexture, gaborTextureInv);  % Give the subject 500 ms after end of test stim to respond
     KbQueueStop();
     [pressed, firstPress, ~,~,~] = KbQueueCheck();
     correct = sum(firstPress > 0) == 1 && strcmp(KbName(firstPress), testRecord.correctKey);
+    unscheduledBreakFlag = strcmp(KbName(firstPress), '5');
+    earlyQuitFlag = strcmp(KbName(firstPress), 'x');
     
     testRecord.eyeCond = eyeCond;
     testRecord.response = KbName(firstPress);
@@ -151,17 +159,32 @@ while GetSecs() < startTime + 60*experimentDurMin     % Keep showing training+te
     
     trialNumber = trialNumber + 1;
     
-    if GetSecs() > nextRestTime && blockNumber < (nRest+1)
-        HW = Breaktime(HW, restDuration, @(t) sprintf('Done with block %i of %i. Please take a %i second break!', blockNumber, nRest+1, t), [], 5);
-        nextRestTime = GetSecs() + blockDurSec;
+    if GetSecs() > nextRestTime
+        if blockNumber < (nRest+1)
+            HW = Breaktime(HW, restDuration, @(t) sprintf('Done with block %i of %i. Please take a %i second break!', blockNumber, nRest+1, t), [], 5);
+            nextRestTime = GetSecs() + blockDurSec;
+        end
         blockNumber = blockNumber + 1;
+    end
+    
+    if unscheduledBreakFlag
+        startBreakTime = GetSecs();
+        HW = Breaktime(HW, 0, [], 'Press 5 key to resume...');
+        endBreakTime = GetSecs();
+        nextRestTime = nextRestTime + (endBreakTime - startBreakTime);
+    end
+    
+    if earlyQuitFlag
+        break;
     end
     
     fprintf('LE %.2f | RE %.2f | Both %.2f\n', testDuration(1), testDuration(2), testDuration(3))
     
 end
 
-HW = Breaktime(HW, 0, [], 'Thank you!');
+if ~earlyQuitFlag
+    HW = Breaktime(HW, 0, [], 'Thank you!');
+end
 
 %% Close the data file
 delete(data);

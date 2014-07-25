@@ -147,11 +147,14 @@ function commitDataLog(folder, dataFolder, subfolder)
 end
 
 function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
+%     labels =  {'Signal left, noise right', ...
+%         'Signal right, noise left', ...
+%         'Signal right, noise left (2nd time)', ...
+%         'Signal left, noise right (2nd time)'};
+%     sizeArgs = {4, 1};
     labels =  {'Signal left, noise right', ...
-        'Signal right, noise left', ...
-        'Signal right, noise left (2nd time)', ...
-        'Signal left, noise right (2nd time)'};
-    sizeArgs = {4, 1};
+        'Signal right, noise left'};
+    sizeArgs = {2, 1};
     Ss = cell(sizeArgs{:});
     ts = zeros(sizeArgs{:});
     sds = zeros(sizeArgs{:});
@@ -172,7 +175,7 @@ function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
     if isTesting
         E.maxTrials = 3;
     else
-        E.maxTrials = 25;
+        E.maxTrials = 50;
     end
     E.catchTrialProb = 0.0;
     
@@ -180,13 +183,14 @@ function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
         1, 1, 2, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
     [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
         2, 2, 1, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
-    [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
-        3, 2, 1, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
-    [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
-        4, 1, 2, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
+%     [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
+%         3, 2, 1, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
+%     [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
+%         4, 1, 2, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
     
     % ts contains log10(contrast ratio), and log of ratio = difference of logs
-    ioc = mean(ts([1,4])) - mean(ts([2,3]));
+    %ioc = mean(ts([1,4])) - mean(ts([2,3]));
+    ioc = ts(1) - ts(2);
     
     %re-enable x-axis marks on bottom plots
     subplot(sizeArgs{:}, sizeArgs{1}*sizeArgs{2});
