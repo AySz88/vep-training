@@ -147,14 +147,11 @@ function commitDataLog(folder, dataFolder, subfolder)
 end
 
 function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
-%     labels =  {'Signal left, noise right', ...
-%         'Signal right, noise left', ...
-%         'Signal right, noise left (2nd time)', ...
-%         'Signal left, noise right (2nd time)'};
-%     sizeArgs = {4, 1};
     labels =  {'Signal left, noise right', ...
-        'Signal right, noise left'};
-    sizeArgs = {2, 1};
+       'Signal right, noise left', ...
+       'Signal right, noise left (2nd time)', ...
+       'Signal left, noise right (2nd time)'};
+    sizeArgs = {4, 1};
     Ss = cell(sizeArgs{:});
     ts = zeros(sizeArgs{:});
     sds = zeros(sizeArgs{:});
@@ -175,7 +172,7 @@ function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
     if isTesting
         E.maxTrials = 3;
     else
-        E.maxTrials = 50;
+        E.maxTrials = 25;
     end
     E.catchTrialProb = 0.0;
     
@@ -183,28 +180,29 @@ function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
         1, 1, 2, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
     [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
         2, 2, 1, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
-%     [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
-%         3, 2, 1, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
-%     [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
-%         4, 1, 2, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
+    M.tStart = ts(2);
+    [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
+        3, 2, 1, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
+    M.tStart = ts(1);
+    [ts, sds, Ss, dirtylog, HW] = RunHessSet(...
+        4, 1, 2, sizeArgs, labels, M, E, HW, ts, sds, Ss, dirtylog);
     
     % ts contains log10(contrast ratio), and log of ratio = difference of logs
-    %ioc = mean(ts([1,4])) - mean(ts([2,3]));
-    ioc = ts(1) - ts(2);
+    ioc = mean(ts([1,4])) - mean(ts([2,3]));
     
     %re-enable x-axis marks on bottom plots
     subplot(sizeArgs{:}, sizeArgs{1}*sizeArgs{2});
     set(gca,'xtickMode','auto');
-
+    
     %save staircases figure
     hgsave('staircases.fig');
-
+    
     hold off;
-
+    
     % FIXME fix GraphResults and finish!
     %GraphResults(ts, sds, trialName, labels, ^FIX(noiseContrasts)^);
     %hgsave('thresholds.fig');
-
+    
     save('Ss.mat', 'Ss');
     fileattrib('Ss.mat', '-w'); %readonly
     save('ts.mat', 'ts');
@@ -215,10 +213,10 @@ function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
     fileattrib('ioc.mat', '-w'); %readonly
     save('labels.mat', 'labels');
     fileattrib('labels.mat', '-w'); %readonly
-
+    
     save('dirtylog.mat', 'dirtylog', '-ascii', '-tabs');
     fileattrib('dirtylog.mat', '-w'); %readonly
-
+    
     labels = {'left signal', 'right signal', ...
         'left noise', 'right noise', 'correct'};
     dirtycelllog = [labels; num2cell(dirtylog)];
@@ -226,7 +224,7 @@ function [ioc, ts, sds, Ss, HW] = RunHessIOC(trialName, HW, isTesting)
     if xlsStatus
         fileattrib('dirtylog.xls', '-w'); %readonly
     end
-
+    
     % write dirtylog as csv as well
     fid = fopen('dirtylog.csv', 'a');
     % labels (strings)
